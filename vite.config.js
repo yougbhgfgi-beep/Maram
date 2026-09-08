@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react'
 import { copyFileSync, mkdirSync } from 'node:fs'
 import { resolve, dirname } from 'node:path'
 
-const ASSETS = ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'song.mp3', 'video.mp4']
+const ASSETS = ['photo1.jpg', 'photo2.jpg', 'photo3.jpg', 'photo4.jpg', 'song.mp3', 'video.mp4', 'manifest.json', 'sw.js', 'icon-192.png', 'icon-512.png', 'apple-touch-icon.png', 'favicon.png', 'favicon.ico']
 
 function copyAssetsToDist() {
   return {
