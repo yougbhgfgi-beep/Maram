@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طارق و مرام - Love Website</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- React & ReactDOM (UMD) -->
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react/18.3.1/umd/react.development.min.js"></script>
+    <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.3.1/umd/react-dom.development.min.js"></script>
+    <!-- Babel for JSX -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.26.0/babel.min.js"></script>
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;700&family=Dancing+Script:wght@700&family=Montserrat:wght@400;700;900&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                        script: ['Dancing Script', 'cursive'],
+                        premium: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    screens: {
+                        'xs': '375px',
+                    },
+                    colors: {
+                        rose: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                            800: '#9f1239',
+                            900: '#881337',
+                        },
+                        romantic: {
+                            primary: 'rgb(196, 13, 116)',
+                            pink: '#fecdd3',
+                            gold: '#D4AF37',
+                            deep: '#2e001b',
+                            soft: '#fff1f2',
+                        },
+                        luxury: {
+                            gold: 'linear-gradient(45deg, #8a642a, #d1b464, #5d4a1f, #d1b464, #8a642a)',
+                            goldLight: '#f3e5ab',
+                            goldDeep: '#5d4a1f',
+                            onyx: '#090A0F',
+                        },
+                        premium: {
+                            gold: '#D4AF37',
+                            magenta: 'rgb(196, 13, 116)',
+                            pink: 'rgb(196, 13, 116)',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Starry Background */
+        .star-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -10;
+            background: radial-gradient(ellipse at bottom, #1B2735 0%, #090A0F 100%);
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: twinkle var(--duration) infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 1;
+                transform: scale(1.2);
+            }
+        }
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background-color: #090A0F;
+        }
+
+        .premium-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .login-gradient {
+            background: radial-gradient(circle at 50% 50%, rgb(196, 13, 116) 0%, #000000 100%);
+        }
+
+        .aura-glow {
+            position: absolute;
+            width: min(600px, 90vw);
+            height: min(600px, 90vw);
+            background: radial-gradient(circle, rgba(196, 13, 116, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(80px);
+            animation: auraMove 20s infinite alternate;
+        }
+
+        @keyframes auraMove {
+            0% {
+                transform: translate(-20%, -20%) scale(1);
+            }
+
+            100% {
+                transform: translate(20%, 20%) scale(1.2);
+            }
+        }
+
+        .text-shimmer {
+            background: linear-gradient(90deg, #fff, rgb(196, 13, 116), #fff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShimmer 4s linear infinite;
+        }
+
+        /* Fluid Typography & Spacing */
+        :root {
+            --section-py: clamp(4rem, 10vw, 8rem);
+        }
+
+        h1 {
+            font-size: clamp(2rem, 8vw, 5rem);
+        }
+
+        h2 {
+            font-size: clamp(1.75rem, 6vw, 4rem);
+        }
+
+        h3 {
+            font-size: clamp(1.25rem, 4vw, 2.5rem);
+        }
+
+        .py-responsive {
+            padding-top: var(--section-py);
+            padding-bottom: var(--section-py);
+        }
+
+        .premium-counter {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(196, 13, 116, 0.1);
+            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .text-extreme-glow {
+            text-shadow: 0 0 20px rgba(255, 255, 255, 1), 0 0 40px rgba(196, 13, 116, 0.8), 0 0 60px rgba(196, 13, 116, 0.6);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        .result-heart {
+            color: rgb(196, 13, 116);
+            display: inline-block;
+            filter: drop-shadow(0 0 8px rgba(196, 13, 116, 0.6));
+            transform: scale(1.1);
+            margin: 0 5px;
+        }
+
+        .premium-counter:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 60px rgba(196, 13, 116, 0.25);
+            transform: translateY(-5px);
+        }
+
+        .numeric-flip {
+            display: inline-block;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+
+        .flip-change {
+            transform: translateY(-10px) rotateX(20deg);
+            opacity: 0.2;
+        }
+
+        .glow-soft {
+            text-shadow: 0 0 20px rgba(196, 13, 116, 0.4);
+        }
+
+        .shimmer-btn {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .shimmer-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(to bottom right,
+                    transparent,
+                    rgba(255, 255, 255, 0.1),
+                    transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                transform: translateX(-100%) rotate(45deg);
+            }
+
+            100% {
+                transform: translateX(100%) rotate(45deg);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 1s ease-in forwards;
+            opacity: 0;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgb(196, 13, 116);
+            border-radius: 4px;
+        }
+
+        /* 3D Carousel */
+        .carousel-container {
+            perspective: 1000px;
+            overflow: visible;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 350px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: spin 20s infinite linear;
+        }
+
+        @media (max-width: 768px) {
+            .carousel {
+                height: 250px;
+            }
+        }
+
+        .carousel:hover {
+            animation-play-state: paused;
+        }
+
+        .carousel-item {
+            position: absolute;
+            width: 180px;
+            height: 270px;
+            left: 50%;
+            top: 50%;
+            transform-origin: center;
+            transform: translate(-50%, -50%) rotateY(var(--i)) translateZ(350px);
+            transition: transform 0.5s, box-shadow 0.5s;
+            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0005);
+        }
+
+        @media (max-width: 768px) {
+            .carousel-item {
+                width: 120px;
+                height: 180px;
+                transform: translate(-50%, -50%) rotateY(var(--i)) translateZ(200px);
+            }
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* Particles */
+        .particle {
+            position: fixed;
+            pointer-events: none;
+            animation: burst 1s ease-out forwards;
+            z-index: 9999;
+        }
+
+        @keyframes burst {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Cursor Trail */
+        .trail-heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: 20px;
+            animation: fadeUp 1s ease-out forwards;
+            z-index: 9999;
+        }
+
+        @keyframes fadeUp {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: translate(-50%, -150%) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        /* Camera Viewfinder Overlay */
+        .camera-overlay {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            z-index: 50;
+        }
+
+        .rec-dot {
+            width: 12px;
+            height: 12px;
+            background-color: rgb(196, 13, 116);
+            border-radius: 50%;
+            animation: pulse-slow 1s infinite;
+        }
+
+        .corner-tl,
+        .corner-tr,
+        .corner-bl,
+        .corner-br {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 4px solid white;
+        }
+
+        .corner-tl {
+            top: 20px;
+            left: 20px;
+            border-right: none;
+            border-bottom: none;
+        }
+
+        .corner-tr {
+            top: 20px;
+            right: 20px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .corner-bl {
+            bottom: 20px;
+            left: 20px;
+            border-right: none;
+            border-top: none;
+        }
+
+        .corner-br {
+            bottom: 20px;
+            right: 20px;
+            border-left: none;
+            border-top: none;
+        }
+
+        /* Film Strip Style for Carousel Items */
+        .film-border {
+            background-color: rgb(196, 13, 116);
+            padding: 15px 5px;
+            /* Vertical padding simulates film sprockets */
+            border-radius: 4px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Heart Crush Game - Premium Visuals */
+        .heart-crush-container {
+            perspective: 1000px;
+        }
+
+        .main-heart {
+            font-size: 10rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            user-select: none;
+            filter: drop-shadow(0 0 20px rgba(209, 12, 127, 0.5));
+            display: inline-block;
+            position: relative;
+        }
+
+        .main-heart:active {
+            transform: scale(0.9) rotate(-5deg);
+        }
+
+        .heart-shake {
+            animation: heartShake 0.4s cubic-bezier(.36, .07, .19, .97) both;
+        }
+
+        @keyframes heartShake {
+
+            10%,
+            90% {
+                transform: translate3d(-2px, 0, 0) rotate(-2deg);
+            }
+
+            20%,
+            80% {
+                transform: translate3d(4px, 0, 0) rotate(3deg);
+            }
+
+            30%,
+            50%,
+            70% {
+                transform: translate3d(-6px, 0, 0) rotate(-4deg);
+            }
+
+            40%,
+            60% {
+                transform: translate3d(6px, 0, 0) rotate(4deg);
+            }
+        }
+
+        .heart-cracked {
+            position: relative;
+        }
+
+        .heart-cracked::after {
+            content: '⚡';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 4rem;
+            color: rgba(255, 255, 255, 0.4);
+            pointer-events: none;
+            filter: blur(1px);
+        }
+
+        .final-heart-glow {
+            font-size: 12rem;
+            color: #ff4db1;
+            filter: drop-shadow(0 0 50px rgba(255, 77, 177, 0.9)) drop-shadow(0 0 100px rgba(255, 77, 177, 0.4));
+            animation: finalHeartFloat 3s infinite ease-in-out, finalHeartGlowPulse 2s infinite ease-in-out;
+            cursor: pointer;
+            z-index: 10002;
+        }
+
+        @keyframes finalHeartFloat {
+
+            0%,
+            100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-30px) scale(1.05);
+            }
+        }
+
+        @keyframes finalHeartGlowPulse {
+
+            0%,
+            100% {
+                filter: drop-shadow(0 0 50px rgba(255, 77, 177, 0.9));
+            }
+
+            50% {
+                filter: drop-shadow(0 0 80px rgba(255, 77, 177, 1)) brightness(1.2);
+            }
+        }
+
+        .shatter-particle {
+            position: absolute;
+            pointer-events: none;
+            animation: shatter 1s ease-out forwards;
+        }
+
+        @keyframes shatter {
+            0% {
+                transform: translate(0, 0) scale(1);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--tr));
+                opacity: 0;
+            }
+        }
+
+        .click-hint {
+            animation: hintPulse 1.5s infinite;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            margin-top: 2rem;
+        }
+
+        @keyframes hintPulse {
+
+            0%,
+            100% {
+                opacity: 0.3;
+                transform: scale(1);
+            }
+
+            50% {
+                opacity: 0.8;
+                transform: scale(1.05);
+            }
+        }
+
+        .game-overlay {
+            background: radial-gradient(circle, rgba(30, 0, 15, 0.98) 0%, rgba(0, 0, 0, 1) 100%);
+        }
+
+        @keyframes floating-heart {
+            0% {
+                transform: translateY(100vh) scale(0.5);
+                opacity: 0;
+            }
+
+            20% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-20vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .flying-heart {
+            position: absolute;
+            cursor: pointer;
+            z-index: 50;
+            animation: floating-heart 4s linear forwards;
+            filter: drop-shadow(0 0 10px rgba(131, 11, 157, 0.5));
+            transition: transform 0.2s;
+        }
+
+        .flying-heart:hover {
+            transform: scale(1.4);
+        }
+
+        @keyframes extreme-glow {
+
+            0%,
+            100% {
+                filter: brightness(1) drop-shadow(0 0 10px white);
+            }
+
+            50% {
+                filter: brightness(2) drop-shadow(0 0 30px white) drop-shadow(0 0 50px rgb(196, 13, 116));
+            }
+        }
+
+        .text-extreme-glow {
+            animation: extreme-glow 1.5s infinite ease-in-out;
+        }
+
+        .flash-effect {
+            animation: screen-flash 0.5s ease-out forwards;
+        }
+
+        @keyframes screen-flash {
+            0% {
+                background: white;
+                opacity: 0.8;
+            }
+
+            100% {
+                background: transparent;
+                opacity: 0;
+            }
+        }
+
+        /* Premium Envelope Styling */
+        .envelope-container {
+            position: relative;
+            width: min(320px, 90vw);
+            height: min(210px, 60vw);
+            margin: auto;
+            cursor: pointer;
+            perspective: 1500px;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 100;
+        }
+
+        .envelope-container:hover {
+            transform: scale(1.05) rotateX(10deg);
+        }
+
+        .envelope-container.is-growing {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            z-index: 200;
+            cursor: default;
+        }
+
+        .envelope-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgb(196, 13, 116);
+            /* Premium Magenta Body */
+            border-radius: 8px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+            transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .is-growing .envelope-wrapper {
+            background: transparent;
+            box-shadow: none;
+        }
+
+        .envelope-flap {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: calc(min(300px, 85vw) / 2) solid transparent;
+            border-right: calc(min(300px, 85vw) / 2) solid transparent;
+            border-top: calc(min(200px, 55vw) * 0.55) solid rgb(196, 13, 116);
+            z-index: 50;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            transform-origin: top;
+            filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.2));
+        }
+
+        .envelope-open .envelope-flap {
+            transform: rotateX(180deg);
+            z-index: 10;
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: calc(min(300px, 85vw) / 2) solid transparent;
+            border-right: calc(min(300px, 85vw) / 2) solid transparent;
+            border-bottom: calc(min(200px, 55vw) * 0.55) solid rgb(150, 10, 88);
+            bottom: 0;
+            z-index: 40;
+        }
+
+        .envelope-sides {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgb(196, 13, 116);
+            clip-path: polygon(0 0, 50% 50%, 100% 0, 100% 100%, 0 100%);
+            z-index: 35;
+        }
+
+        .wax-seal {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: min(60px, 18vw);
+            height: min(60px, 18vw);
+            background: linear-gradient(135deg, #111827 0%, rgb(46, 0, 27) 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.2);
+            transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .wax-seal svg {
+            color: #fecaca;
+            width: 30px;
+            height: 30px;
+        }
+
+        .envelope-open .wax-seal {
+            opacity: 0;
+            transform: translate(-50%, -60%) scale(1.5);
+            pointer-events: none;
+        }
+
+        .letter-paper {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 90%;
+            height: 180px;
+            background: #fdfcf0;
+            /* Ivory/Cream Paper */
+            border-radius: 2px;
+            z-index: 20;
+            transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .envelope-open .letter-paper {
+            transform: translateX(-50%) translateY(-100px);
+            height: 220px;
+        }
+
+        .is-growing .letter-paper {
+            width: 95%;
+            max-width: 800px;
+            height: 85vh;
+            bottom: 50%;
+            transform: translate(-50%, 50%);
+            border-radius: 20px;
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.8);
+            overflow-y: auto;
+            z-index: 300;
+        }
+
+        .letter-scroll-content {
+            opacity: 0;
+            transition: opacity 0.5s ease 0.8s;
+        }
+
+        .is-growing .letter-scroll-content {
+            opacity: 1;
+        }
+
+        .letter-content {
+            font-family: 'Dancing Script', cursive;
+            color: #4b2c20;
+            text-align: center;
+            font-size: clamp(1rem, 4vw, 1.5rem);
+            line-height: 1.6;
+        }
+
+        /* Modal specific refinements */
+        .premium-letter-modal {
+            background-color: #fff9ea;
+            background-image: radial-gradient(#e2d2b5 1px, transparent 1px);
+            background-size: 20px 20px;
+            border: 2px solid #e2d2b5;
+            position: relative;
+            box-shadow: 0 30px 100px rgba(0, 0, 0, 0.5), inset 0 0 150px rgba(226, 210, 181, 0.3);
+        }
+
+        .letter-border {
+            position: absolute;
+            top: 20px;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            border: 1px solid rgb(196, 13, 116);
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Fancy Letter Typography */
+        .fancy-letter span:last-child {
+            font-size: 1.6em;
+            color: rgb(196, 13, 116);
+            vertical-align: bottom;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        .film-border::before,
+        .film-border::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background-image: linear-gradient(to right, white 50%, transparent 50%);
+            background-size: 20px 100%;
+            opacity: 0.3;
+        }
+
+        .film-border::before {
+            top: 5px;
+        }
+
+        .film-border::after {
+            bottom: 5px;
+        }
+
+        .pulse-active {
+            animation: aura-pulse 4s ease-in-out infinite alternate !important;
+        }
+
+        @keyframes aura-pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.3;
+            }
+
+            100% {
+                transform: scale(1.2);
+                opacity: 0.6;
+            }
+        }
+
+        .secret-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(196, 13, 116, 0.4) 0%, transparent 70%);
+            z-index: 200;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .secret-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .love-note-btn {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 150;
+            width: 60px;
+            height: 60px;
+            background: rgb(196, 13, 116);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(196, 13, 116, 0.4);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .love-note-btn:hover {
+            transform: scale(1.1) translateY(-5px);
+            box-shadow: 0 15px 30px rgba(196, 13, 116, 0.6);
+        }
+
+        .love-note-popup {
+            position: fixed;
+            bottom: 6.5rem;
+            right: 2rem;
+            width: 300px;
+            max-width: 85vw;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 1.5rem;
+            z-index: 151;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            transform-origin: bottom right;
+            animation: scaleUp 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes scaleUp {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        /* Decorative Frame Styles */
+        .decorative-chain {
+            position: fixed;
+            top: -20px;
+            bottom: 0;
+            width: 40px;
+            z-index: 50;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            opacity: 0.6;
+            animation: sway 6s ease-in-out infinite alternate;
+        }
+
+        .decorative-chain.left {
+            left: 10px;
+        }
+
+        .decorative-chain.right {
+            right: 10px;
+        }
+
+        .chain-link {
+            width: 2px;
+            height: 40px;
+            background: linear-gradient(to bottom, #D4AF37, #bf953f);
+            position: relative;
+        }
+
+        .chain-heart {
+            width: 15px;
+            height: 15px;
+            color: #D4AF37;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+            margin: 5px 0;
+            animation: shimmer 2s infinite linear;
+        }
+
+        .top-ornate-header {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            height: clamp(30px, 10vw, 60px);
+            z-index: 45;
+            pointer-events: none;
+            opacity: 0.4;
+            mask-image: linear-gradient(to bottom, black 70%, transparent);
+            -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent);
+        }
+
+        @keyframes sway {
+            from {
+                transform: rotate(-1deg);
+                transform-origin: top;
+            }
+
+            to {
+                transform: rotate(1deg);
+                transform-origin: top;
+            }
+        }
+
+        @keyframes shimmer {
+            0% {
+                filter: brightness(1) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+            }
+
+            50% {
+                filter: brightness(1.5) drop-shadow(0 0 10px rgba(212, 175, 55, 0.8));
+            }
+
+            100% {
+                filter: brightness(1) drop-shadow(0 0 5px rgba(212, 175, 55, 0.5));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .decorative-chain {
+                width: 20px;
+                opacity: 0.3;
+                display: none;
+                /* Hide on mobile to save space */
+            }
+
+            .chain-heart {
+                width: 8px;
+                height: 8px;
+            }
+
+            .top-ornate-header {
+                opacity: 0.15;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .decorative-chain {
+                display: flex;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        // --- Icons ---
+        const Heart = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+                <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+        );
+
+        const Lock = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={className}>
+                <path fillRule="evenodd" d="M12 1.5a5.25 5.25 0 00-5.25 5.25v3a3 3 0 00-3 3v6.75a3 3 0 003 3h10.5a3 3 0 003-3v-6.75a3 3 0 00-3-3v-3c0-2.9-2.35-5.25-5.25-5.25zm3.75 8.25v-3a3.75 3.75 0 10-7.5 0v3h7.5z" clipRule="evenodd" />
+            </svg>
+        );
+
+
+        const StarBackground = () => {
+            return (
+                <div className="star-background">
+                    {[...Array(100)].map((_, i) => (
+                        <div
+                            key={i}
+                            className="star"
+                            style={{
+                                top: Math.random() * 100 + '%',
+                                left: Math.random() * 100 + '%',
+                                width: Math.random() * 3 + 'px',
+                                height: Math.random() * 3 + 'px',
+                                '--duration': Math.random() * 3 + 2 + 's',
+                                animationDelay: Math.random() * 5 + 's'
+                            }}
+                        ></div>
+                    ))}
+                </div>
+            );
+        };
+
+        const ConstellationGame = ({ lang }) => {
+            const [activeStars, setActiveStars] = useState([]);
+            const [connectedCount, setConnectedCount] = useState(0);
+            const [gameOver, setGameOver] = useState(false);
+            const totalStars = 8;
+
+            const spawnStars = () => {
+                const newStars = [];
+                for (let i = 0; i < totalStars; i++) {
+                    newStars.push({
+                        id: i,
+                        top: 20 + Math.random() * 60,
+                        left: 10 + Math.random() * 80,
+                        connected: false
+                    });
+                }
+                setActiveStars(newStars);
+                setConnectedCount(0);
+                setGameOver(false);
+            };
+
+            const connectStar = (id) => {
+                const star = activeStars.find(s => s.id === id);
+                if (star.connected) return;
+
+                setActiveStars(prev => prev.map(s => s.id === id ? { ...s, connected: true } : s));
+                setConnectedCount(prev => prev + 1);
+
+                if (connectedCount + 1 === totalStars) {
+                    setTimeout(() => setGameOver(true), 1000);
+                }
+            };
+
+            useEffect(() => {
+                spawnStars();
+            }, []);
+
+            return (
+                <section id="game" className="py-24 px-4 relative z-10 overflow-hidden">
+                    <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-white font-premium">{lang === 'ar' ? 'أساطير الحب 🌌' : 'Love Constellation 🌌'}</h2>
+
+                    <div className="max-w-4xl mx-auto premium-counter rounded-[1.5rem] md:rounded-[3rem] p-4 md:p-12 relative h-[450px] md:h-[600px] flex flex-col items-center justify-center overflow-hidden border border-[rgb(196,13,116)]/30 bg-black/40 backdrop-blur-sm">
+
+                        <svg className="absolute inset-0 w-full h-full pointer-events-none">
+                            {activeStars.map((star, i) => {
+                                const nextStar = activeStars.find(s => s.id === star.id + 1);
+                                if (star.connected && nextStar && nextStar.connected) {
+                                    return (
+                                        <line
+                                            key={`line-${i}`}
+                                            x1={`${star.left}%`}
+                                            y1={`${star.top}%`}
+                                            x2={`${nextStar.left}%`}
+                                            y2={`${nextStar.top}%`}
+                                            stroke="url(#goldGradient)"
+                                            strokeWidth="2"
+                                            className="animate-pulse"
+                                        />
+                                    );
+                                }
+                                return null;
+                            })}
+                            <defs>
+                                <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stopColor="#D4AF37" />
+                                    <stop offset="100%" stopColor="rgb(196, 13, 116)" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        {activeStars.map(star => (
+                            <div
+                                key={star.id}
+                                className={`absolute w-10 h-10 md:w-8 md:h-8 cursor-pointer transition-all duration-500 z-20 flex items-center justify-center ${star.connected ? 'scale-125' : 'hover:scale-150'}`}
+                                style={{ top: `${star.top}%`, left: `${star.left}%`, transform: 'translate(-50%, -50%)' }}
+                                onClick={() => connectStar(star.id)}
+                            >
+                                <div className={`w-6 h-6 md:w-full md:h-full rounded-full flex items-center justify-center ${star.connected ? 'bg-[#D4AF37] shadow-[0_0_20px_#D4AF37]' : 'bg-white/20 border border-white/40'}`}>
+                                    {star.connected ? '✨' : ''}
+                                </div>
+                                {!star.connected && <div className="absolute inset-x-2 inset-y-2 bg-white/20 rounded-full animate-ping"></div>}
+                            </div>
+                        ))}
+
+                        {gameOver && (
+                            <div className="text-center z-30 animate-fade-in">
+                                <div className="text-8xl md:text-[12rem] mb-6 animate-pulse filter drop-shadow-[0_0_30px_rgb(196,13,116)]">💖</div>
+                                <h3 className="text-4xl font-bold text-white mb-4 text-extreme-glow">
+                                    {lang === 'ar' ? 'اكتملت الحكاية! ✨' : 'Story Complete! ✨'}
+                                </h3>
+                                <p className="text-xl text-rose-200 italic mb-8 max-w-md">
+                                    {lang === 'ar' ? 'اخترتك إنتي.. ومهما الدنيا عملت فينا، كل مرة هختارك من أول وجديد 💖' : 'I chose you.. and no matter what the world does to us, every time I will choose you all over again 💖'}
+                                </p>
+                                <button onClick={spawnStars} className="text-[rgb(196,13,116)] underline font-bold hover:text-white transition-colors">
+                                    {lang === 'ar' ? 'ارسم حكاية تانية؟' : 'Draw another story?'}
+                                </button>
+                            </div>
+                        )}
+
+                        {!gameOver && (
+                            <div className="absolute bottom-8 text-white/40 font-premium tracking-widest uppercase text-sm animate-pulse">
+                                {lang === 'ar' ? 'وصل النجوم ببعضها...' : 'Connect the stars...'}
+                            </div>
+                        )}
+                    </div>
+                </section>
+            );
+        };
+
+        const InfinityIcon = ({ className }) => (
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+                <path d="M12 12c-2-2.67-4-4-6-4a4 4 0 1 0 0 8c2 0 4-1.33 6-4Zm0 0c2 2.67 4 4 6 4a4 4 0 0 0 0-8c-2 0-4 1.33-6 4Z" />
+            </svg>
+        );
+
+        function usePulse(isPlaying) {
+            useEffect(() => {
+                const auras = document.querySelectorAll('.aura-glow');
+                if (isPlaying) {
+                    auras.forEach(a => a.classList.add('pulse-active'));
+                } else {
+                    auras.forEach(a => a.classList.remove('pulse-active'));
+                }
+            }, [isPlaying]);
+        }
+
+        function useParticleSystem() {
+            useEffect(() => {
+                const createParticle = (x, y) => {
+                    const colors = ['rgb(196, 13, 116)', '#D4AF37', '#fecdd3', '#ff85cc', '#ffb3e0', '#ff66c4'];
+                    const emojis = ['💖', '✨', '🌸', '✨'];
+                    for (let i = 0; i < 5; i++) {
+                        const particle = document.createElement('div');
+                        particle.classList.add('particle');
+                        particle.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+                        particle.style.left = x + 'px';
+                        particle.style.top = y + 'px';
+                        particle.style.color = colors[Math.floor(Math.random() * colors.length)];
+                        particle.style.fontSize = Math.random() * 15 + 8 + 'px';
+                        particle.style.setProperty('--tx', (Math.random() - 0.5) * 150 + 'px');
+                        particle.style.setProperty('--ty', (Math.random() - 0.5) * 150 + 'px');
+                        document.body.appendChild(particle);
+                        setTimeout(() => particle.remove(), 1000);
+                    }
+                };
+                const handleTouch = (e) => {
+                    [...e.touches].forEach(t => createParticle(t.clientX, t.clientY));
+                };
+                const handleClick = (e) => createParticle(e.clientX, e.clientY);
+                window.addEventListener('touchstart', handleTouch);
+                window.addEventListener('touchmove', handleTouch);
+                window.addEventListener('mousedown', handleClick);
+                return () => {
+                    window.removeEventListener('touchstart', handleTouch);
+                    window.removeEventListener('touchmove', handleTouch);
+                    window.removeEventListener('mousedown', handleClick);
+                };
+            }, []);
+        }
+
+        const finalMessageAR = `إنتي مكنتيش مجرد حد دخل حياتي بالصدفة ومشي.. إنتي جيتي وغيرتي حاجات جوايا أنا نفسي مكنتش عارف إنها محتاجة تتغير. بقيت لما أتعب أدور عليكي، ولما أفرح أول حد نفسي أحكيله إنتي، ولما الدنيا تضيق بيا بحس إن وجودك لوحده كفاية يهون عليا كل حاجة..
+
+يمكن أنا معرفتش أقولك كل اللي جوايا، بس صدقيني لو تعرفي مكانك عندي، هتعرفي إنك مش مجرد حب.. إنتي حتة من قلبي بقت ليها اسم وصوت وروح، والاسم ده إنتي.
+
+اخترت البنت اللي لما بتقولي بحبك بتصدقها من قلبي، عشان حبها مش كلام وخلاص، حبها مواقف واهتمام وخوف عليا.. اخترت اللي مهما حصل بينا عمرها ما كانت بالنسبالي مجرد حد، دي كانت وفضلت اختياري الصح وأجمل حاجة حصلتلي.
+
+بحبك يا مرام 💖🌍`;
+        const finalMessageEN = `You were never just someone who walked into my life by coincidence and left.. You came and changed things inside me that I never knew needed to change. When I'm tired I look for you, and when I'm happy you're the first one I want to tell, and when the world gets heavy I feel your existence alone is enough to make everything easier.
+
+Maybe I couldn't tell you everything I hold inside, but trust me if you knew your place in my heart you'd know you're not just love.. You're a piece of my heart that gained a name, a voice, and a soul, and that name is you.
+
+I chose the girl who truly means it when she says she loves me, because her love is not just words, her love is actions and care and fear for me. No matter what happened between us, she was never just anyone to me, she was and will always remain my right choice and the most beautiful thing that ever happened to me.
+
+I love you, Maram 💖🌍`;
+
+        const i18n = {
+            ar: {
+                nav: { memories: "ذكرياتنا", video: "الفيديو", why: "ليه بحبك", gallery: "صورنا" },
+                hero: { subtitle: "قصة حب مكتوبة للابد", btn: "زر المفاجأة ✨" },
+                login: { title: "حكاية عشقنا", day: "كلمة السر", month: "شهر", btn: "فتح القلب", quote: "كل لحظة تجمعنا هي البداية..." },
+                meter: { title: "مقياس حبي ليكي", label: "نسبة الحب", calc: "جاري حساب كمية الحب...", result: "النتيجة: حب لا نهائي <span class='result-heart'>💜</span> ∞", hint: "اضغطي عشان تشوفي النتيجة" },
+                timeline: { title: "خط ذكرياتنا" },
+                video: { title: "ذكرى حلوة 🎥", sub: "لحظات متتنسيش..." },
+                reasons: { title: "ليه بحبك؟ 🤔💜", r1: { t: "حنيتك", d: "أحن وأطيب قلب في الدنيا، بتمسحي دمعتي قبل ما تنزل." }, r2: { t: "أماني", d: "معاكي بحس إني مسنود على جبل، ولا حاجة تقدر تكسرني." }, r3: { t: "ضحكتك", d: "لما بتضحكي الدنيا كلها بتضحكلي، هي علاجي ودوائي." }, r4: { t: "قلبك الأبيض", d: "أنقى وأطيب قلب، بيسامح وبيحب بصدق." }, r5: { t: "عيونك", d: "بشوف فيهم مستقبلي." }, r6: { t: "وجودك", d: "كفاية بس إنك موجودة، ده بيخلي الحياة ليها طعم ولون." } },
+                clock: { start: "الأيام اللي قضيناها (13/7/2026)", year: "سنة", month: "شهر", day: "يوم", hour: "ساعة", min: "دقيقة", sec: "ثانية" },
+                footer: { final: "The Final Scene" },
+                envelope: { mylove: "حبيبتي مرام 💜", enter: "دخول عالمنا 💜", hint: "انقر لفتح الرسالة 💌", message: "رسالة حب ليكي..." },
+                gallery: { title: "صورنا الحلوة 📸" },
+                finalScene: { scene1: "يمكن نزعل، ويمكن نتخانق،<br />ويمكن الدنيا تضغط علينا…", scene2: "بس عمري ما هفكر إن وجودك في حياتي كان غلطة.", scene2b: "أنتِ من الحاجات القليلة اللي مهما حصل…", scene3: "قلبي كل مرة بيختار يتمسك بيها أكتر.", scene3b: "إنتي الاختيار اللي عمره ما كان غلطة.", scene6: "اخترت البنت الصح في حياتي… اللي عمري ما حسيت معاها إني اخترت غلط", scene7: "أنا ثابت…", scene8: "علشان انتي مرام… كل مرة هختارك من أول وجديد.", infinity: "إلى ما لا نهاية", back: "الرجوع للرئيسية", thanks: "بحبك يا مرام…" },
+                timeline: {
+                    title: "خط ذكرياتنا",
+                    items: [
+                        { text: "بداية حكايتنا 💖", date: "13/7/2026", desc: "اليوم اللي غير حياتي للأبد ، اليوم اللي فيه عيوننا اتقابلت وبدأت أجمل قصة حب ." },
+                        { text: "ضحكتك هي حياتي 👩‍❤️‍👨", date: "أحلى لحظة", desc: "كل مرة بشوف فيها ضحكتك بحس إن الدنيا لسه بخير ، إنتي دايماً سر سعادتي ." },
+                        { text: "سند وظهر 🌍", date: "معاكي دايماً", desc: "إنتي مش بس حبيبتي ، إنتي كل أهلي ودنيتي ، بيكي بكون أقوى وبواجه أي حاجة ." },
+                        { text: "وعد بالبقاء 💍", date: "لآخر العمر", desc: "وعد مني إني هفضل جنبك لآخر نفس ، إيدنا في إيد بعض هنحقق كل أحلامنا ." },
+                        { text: "أنتِ كفايتي ✨", date: "كل شيء", desc: "مش محتاجة من الدنيا غير وجودك جنبي ، إنتي الحب اللي كنت بتمناه طول عمري ." }
+                    ]
+                }
+            },
+            en: {
+                nav: { memories: "Memories", video: "Video", why: "Why I Love You", gallery: "Photos" },
+                hero: { subtitle: "A love story written forever", btn: "Surprise Button ✨" },
+                login: { title: "Our Love Journey", day: "Password", month: "Month", btn: "Open Heart", quote: "Every moment together is a beginning..." },
+                meter: { title: "My Love Meter for You", label: "Love Percentage", calc: "Calculating love amount...", result: "Result: Infinite Love <span class='result-heart'>💜</span> ∞", hint: "Click to see the result, my love" },
+                timeline: { title: "Our Timeline" },
+                video: { title: "Sweet Memory 🎥", sub: "Unforgettable moments..." },
+                reasons: { title: "Why I Love You? 🤔💜", r1: { t: "Your Kindness", d: "The kindest heart in the world, wiping my tears before they fall." }, r2: { t: "My Safety", d: "With you I feel lean on a mountain, nothing can break me." }, r3: { t: "Your Laugh", d: "When you laugh the whole world laughs for me, it's my cure." }, r4: { t: "Your White Heart", d: "The purest heart, forgives and loves sincerely." }, r5: { t: "Your Eyes", d: "I see in them my future." }, r6: { t: "Your Presence", d: "Just your existence is enough, it gives life taste and color." } },
+                clock: { start: "The days we spent (13/7/2026)", year: "Year", month: "Month", day: "Day", hour: "Hour", min: "Min", sec: "Sec" },
+                footer: { final: "The Final Scene" },
+                envelope: { mylove: "My Beloved Maram 💜", enter: "Enter Our World 💜", hint: "Click to open the message 💌", message: "A love message for you..." },
+                finalScene: { scene1: "We might get upset, and we might argue,<br />and the world might press on us...", scene2: "But I will never think your presence in my life was a mistake.", scene2b: "You are one of the few things that no matter what happens...", scene3: "My heart chooses to hold onto you even more every time.", scene3b: "You are the choice that was never a mistake.", scene6: "I chose the right girl in my life... the one I never felt wrong about choosing", scene7: "I am steady...", scene8: "Because you are Maram... every time I will choose you all over again.", infinity: "To Infinity", back: "Back to Home", thanks: "I love you, Maram..." },
+                timeline: {
+                    title: "Our Timeline",
+                    items: [
+                        { text: "Our Beginning 💖", date: "13/7/2026", desc: "The day that changed my life forever, when our eyes met and started the most beautiful love story." },
+                        { text: "Your smile is my life 👩‍❤️‍👨", date: "Best moment", desc: "Every time I see your smile I feel life is still good, you are always the secret of my happiness." },
+                        { text: "Support and Back 🌍", date: "Always with you", desc: "You are not just my lover, you are all my family and life, with you I am stronger." },
+                        { text: "Promise to stay 💍", date: "To the end", desc: "A promise that I will stay by your side until the last breath, hand in hand we will achieve our dreams." },
+                        { text: "You are my sufficiency ✨", date: "Everything", desc: "I need nothing from the world but your presence, you are the love I wished for all my life." }
+                    ]
+                },
+                gallery: { title: "Our Sweet Photos 📸" }
+            }
+        };
+
+        const FancyText = ({ text }) => {
+            const [displayText, setDisplayText] = useState("");
+            const [index, setIndex] = useState(0);
+            const charArray = useRef([]);
+            const containerRef = useRef(null);
+
+            useEffect(() => {
+                charArray.current = Array.from(text);
+                setDisplayText("");
+                setIndex(0);
+            }, [text]);
+
+            useEffect(() => {
+                if (index < charArray.current.length) {
+                    const timeout = setTimeout(() => {
+                        setDisplayText(prev => prev + charArray.current[index]);
+                        setIndex(prev => prev + 1);
+                    }, 25);
+                    return () => clearTimeout(timeout);
+                }
+            }, [index]);
+
+            useEffect(() => {
+                if (containerRef.current) {
+                    const scrollContainer = containerRef.current.closest('.overflow-y-auto');
+                    if (scrollContainer) {
+                        scrollContainer.scrollTop = scrollContainer.scrollHeight;
+                    }
+                }
+            }, [displayText]);
+
+            return (
+                <div ref={containerRef} className="leading-relaxed text-gray-800 text-right text-xl md:text-2xl font-medium whitespace-pre-wrap pb-10" style={{ direction: 'rtl', minHeight: '1.5em' }}>
+                    {displayText}
+                    <span className="animate-pulse inline-block w-1 h-6 bg-[rgb(196,13,116)] ml-1 align-middle"></span>
+                </div>
+            );
+        };
+
+        const FlipUnit = ({ val, unit }) => {
+            const [displayVal, setDisplayVal] = useState(val);
+            const [isFlipping, setIsFlipping] = useState(false);
+
+            useEffect(() => {
+                if (val !== displayVal) {
+                    setIsFlipping(true);
+                    const timeout = setTimeout(() => {
+                        setDisplayVal(val);
+                        setIsFlipping(false);
+                    }, 400);
+                    return () => clearTimeout(timeout);
+                }
+            }, [val]);
+
+            return (
+                <div className="flex flex-col items-center group px-1 md:px-4">
+                    <div className={`numeric-flip ${isFlipping ? 'flip-change' : ''} text-2xl xs:text-3xl md:text-5xl font-premium text-white drop-shadow-[0_0_8px_rgba(255,255,255,0.3)]`}>
+                        {String(displayVal).padStart(2, '0')}
+                    </div>
+                    <div className="text-[9px] md:text-[11px] font-premium text-rose-200/60 uppercase tracking-[0.2em] mt-1 group-hover:text-[rgb(196,13,116)] transition-colors">
+                        {unit}
+                    </div>
+                </div>
+            );
+        };
+
+        const RelationshipClock = ({ startDate, lang }) => {
+            const [time, setTime] = useState({});
+
+            useEffect(() => {
+                const calculate = () => {
+                    const now = new Date();
+                    const start = new Date(startDate);
+                    let years = now.getFullYear() - start.getFullYear();
+                    let months = now.getMonth() - start.getMonth();
+                    let days = now.getDate() - start.getDate();
+                    if (days < 0) {
+                        months -= 1;
+                        const lastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                        days += lastMonth.getDate();
+                    }
+                    if (months < 0) {
+                        years -= 1;
+                        months += 12;
+                    }
+                    const diffMs = now - start;
+                    setTime({
+                        years,
+                        months,
+                        days,
+                        hours: Math.floor((diffMs / (1000 * 60 * 60)) % 24),
+                        minutes: Math.floor((diffMs / (1000 * 60)) % 60),
+                        seconds: Math.floor((diffMs / 1000) % 60)
+                    });
+                };
+                calculate();
+                const interval = setInterval(calculate, 1000);
+                return () => clearInterval(interval);
+            }, [startDate]);
+
+            const t = i18n[lang].clock;
+            return (
+                <div className="max-w-4xl mx-auto my-6 md:my-20 p-4 md:p-10 bg-white/5 backdrop-blur-xl rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 shadow-[0_0_50px_rgba(131,11,157,0.15)] text-center relative overflow-hidden group">
+                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[#830b9d]/30 to-transparent"></div>
+
+                    <div className="mb-6 md:mb-10">
+                        <p className="text-[rgb(196,13,116)] font-script text-xl md:text-3xl mb-1 italic">Together Forever</p>
+                        <h3 className="text-white/60 text-[10px] md:text-base font-premium tracking-widest uppercase">Since 13 July 2026</h3>
+                    </div>
+
+                    <div className="flex flex-wrap justify-center items-center gap-1 md:gap-4">
+                        <FlipUnit val={time.years} unit={t.year} />
+                        <span className="text-white/20 text-xl md:text-4xl pb-4 hidden md:block">•</span>
+                        <FlipUnit val={time.months} unit={t.month} />
+                        <span className="text-white/20 text-xl md:text-4xl pb-4 hidden md:block">•</span>
+                        <FlipUnit val={time.days} unit={t.day} />
+
+                        <div className="w-full h-px bg-white/5 my-2 md:hidden"></div>
+                        <span className="hidden md:block w-px h-12 bg-white/10 mx-4"></span>
+
+                        <FlipUnit val={time.hours} unit={t.hour} />
+                        <span className="text-white/20 text-xl md:text-4xl pb-4 flex items-center justify-center h-full">:</span>
+                        <FlipUnit val={time.minutes} unit={t.min} />
+                        <span className="text-white/20 text-xl md:text-4xl pb-4 flex items-center justify-center h-full">:</span>
+                        <FlipUnit val={time.seconds} unit={t.sec} />
+                    </div>
+                    <div className="mt-6 md:mt-8 flex justify-center gap-1">
+                        <Heart className="w-4 h-4 md:w-5 md:h-5 text-[rgb(196,13,116)] opacity-40 animate-pulse" />
+                        <Heart className="w-4 h-4 md:w-5 md:h-5 text-[rgb(196,13,116)] opacity-60 animate-pulse [animation-delay:200ms]" />
+                        <Heart className="w-4 h-4 md:w-5 md:h-5 text-[rgb(196,13,116)] opacity-40 animate-pulse [animation-delay:400ms]" />
+                    </div>
+                </div>
+            );
+        };
+
+        const LoveNote = ({ lang }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [msgIndex, setMsgIndex] = useState(0);
+
+            const messages = {
+                ar: [
+                    "انتي أجمل صدفة في حياتي 💖",
+                    "ضحكتك بتنور دنيتي يا مرام ✨",
+                    "ربنا يخليكي ليا يا كل حياتي 💍",
+                    "انتي السند والضهر والروح 🌍",
+                    "بحبك أكتر من أي حاجة في الدنيا 🌹"
+                ],
+                en: [
+                    "You are the most beautiful coincidence in my life 💖",
+                    "Your smile lights up my world, Maram ✨",
+                    "May God keep you for me, my whole life 💍",
+                    "You are my support, my back, and my soul 🌍",
+                    "I love you more than anything in the world 🌹"
+                ]
+            };
+
+            const toggleNote = () => {
+                if (!isOpen) {
+                    setMsgIndex(Math.floor(Math.random() * messages[lang].length));
+                }
+                setIsOpen(!isOpen);
+            };
+
+            return (
+                <div className="relative group">
+                    <button className="love-note-btn !bottom-4 !right-4 md:!bottom-8 md:!right-8" onClick={toggleNote}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+                    </button>
+
+                    {isOpen && (
+                        <div className="love-note-popup !bottom-20 !right-4 md:!bottom-28 md:!right-8">
+                            <div className="flex justify-between items-start mb-3">
+                                <span className="text-[rgb(196,13,116)] font-bold text-xs uppercase tracking-widest">{lang === 'ar' ? 'مذكرة حب 💌' : 'Love Note 💌'}</span>
+                                <button onClick={() => setIsOpen(false)} className="text-white/40 hover:text-white">✕</button>
+                            </div>
+                            <p className="text-white text-lg font-medium leading-relaxed mb-4">
+                                {messages[lang][msgIndex]}
+                            </p>
+                            <button
+                                onClick={() => setMsgIndex((msgIndex + 1) % messages[lang].length)}
+                                className="text-[rgb(196,13,116)] text-xs font-bold hover:underline"
+                            >
+                                {lang === 'ar' ? 'رسالة تانية؟ ✨' : 'Another message? ✨'}
+                            </button>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+
+        const DecorativeFrame = () => {
+            const hearts = [...Array(15)];
+            return (
+                <div className="fixed inset-0 pointer-events-none z-[140]">
+                    {/* Left Chain */}
+                    <div className="decorative-chain left">
+                        {hearts.map((_, i) => (
+                            <React.Fragment key={`l-${i}`}>
+                                <div className="chain-link"></div>
+                                <Heart className="chain-heart" />
+                            </React.Fragment>
+                        ))}
+                    </div>
+
+                    {/* Right Chain */}
+                    <div className="decorative-chain right">
+                        {hearts.map((_, i) => (
+                            <React.Fragment key={`r-${i}`}>
+                                <div className="chain-link"></div>
+                                <Heart className="chain-heart" />
+                            </React.Fragment>
+                        ))}
+                    </div>
+
+                    {/* Top Ornate Header */}
+                    <div className="top-ornate-header">
+                        <svg viewBox="0 0 800 100" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full h-full text-[#D4AF37]">
+                            <path d="M400 20C380 20 365 35 350 35C335 35 320 20 300 20C280 20 260 40 240 40C220 40 200 20 180 20C160 20 140 40 120 40C100 40 80 20 60 20C40 20 20 40 0 40V0H800V40C780 40 760 20 740 20C720 20 700 40 680 40C660 40 640 20 620 20C600 20 580 40 560 40C540 40 520 20 500 20C480 20 465 35 450 35C435 35 420 20 400 20Z" fill="currentColor" fillOpacity="0.1" />
+                            <path d="M400 30C410 30 415 25 420 25C425 25 430 30 440 30C450 30 455 25 460 25C465 25 470 30 480 30" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+                            <path d="M400 30C390 30 385 25 380 25C375 25 370 30 360 30C350 30 345 25 340 25C335 25 330 30 320 30" stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.5" />
+                            <circle cx="400" cy="20" r="3" fill="currentColor" />
+                        </svg>
+                    </div>
+                </div>
+            );
+        };
+
+
+        const EnvelopeComponent = ({ onEnter, lang }) => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [isGrowing, setIsGrowing] = useState(false);
+
+            const handleOpen = () => {
+                if (!isOpen) {
+                    setIsOpen(true);
+                    setTimeout(() => setIsGrowing(true), 1200);
+                }
+            };
+
+            const t = i18n[lang].envelope;
+            return (
+                <div className="fixed inset-0 z-[160] bg-black/95 backdrop-blur-2xl flex flex-col items-center justify-center p-6 animate-fade-in">
+                    <div className={`envelope-container ${isOpen ? 'envelope-open' : ''} ${isGrowing ? 'is-growing' : ''}`} onClick={handleOpen}>
+                        <div className="envelope-wrapper">
+                            <div className="envelope-flap"></div>
+                            <div className="envelope-front"></div>
+                            <div className="envelope-sides"></div>
+                            <div className="wax-seal">
+                                <Heart className="w-8 h-8" />
+                            </div>
+                            <div className="letter-paper">
+                                <div className="letter-border"></div>
+                                <div className="letter-scroll-content">
+                                    <div className="text-center mb-8">
+                                        <div className="inline-block p-4 bg-pink-50 rounded-full mb-4">
+                                            <Heart className="w-12 h-12 text-[#830b9d]" />
+                                        </div>
+                                        <h2 className="text-4xl font-bold text-gray-800 font-sans">إلى حبيبتي مرام 💜</h2>
+                                    </div>
+                                    {isGrowing && <FancyText text={lang === 'ar' ? finalMessageAR : finalMessageEN} />}
+                                    <div className="text-center mt-12 mb-20">
+                                        <button onClick={(e) => { e.stopPropagation(); if (onEnter) onEnter(); }} className="relative z-[200] bg-gradient-to-r from-pink-800 to-[rgb(196,13,116)] text-white px-12 py-4 rounded-full shadow-2xl font-bold text-xl hover:scale-110 active:scale-95 transition-all">
+                                            {t.enter}
+                                        </button>
+                                    </div>
+                                </div>
+                                {!isOpen && (
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <p className="text-gray-800 font-bold opacity-50">{t.message}</p>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                    {!isGrowing && <p className="mt-28 text-white/50 animate-pulse text-xl tracking-widest uppercase font-bold">{t.hint}</p>}
+                </div>
+            );
+        };
+
+        // --- Main Component ---
+        function LoveWebsite() {
+            useParticleSystem();
+
+            useEffect(() => {
+                const handleScroll = () => {
+                    const images = document.querySelectorAll('.parallax-img');
+                    images.forEach(img => {
+                        const speed = 0.5;
+                        const rect = img.parentElement.getBoundingClientRect();
+                        const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                        if (isVisible) {
+                            const offset = (window.innerHeight - rect.top) * speed * 0.1;
+                            img.style.transform = `translateY(${offset - 30}px)`;
+                        }
+                    });
+                };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const [lang, setLang] = useState('ar');
+            const [isLogged, setIsLogged] = useState(false);
+            const [day, setDay] = useState("");
+            const [showEnvelope, setShowEnvelope] = useState(false);
+            const [showSecret, setShowSecret] = useState(false);
+            const [showFinalScene, setShowFinalScene] = useState(false);
+            const [isPlaying, setIsPlaying] = useState(false);
+            const [selectedImage, setSelectedImage] = useState(null);
+            const audioRef = useRef(null);
+
+            usePulse(isPlaying);
+
+            const firstSightDate = new Date("2026-07-13T01:15:00");
+
+            const handleLogin = () => {
+                if (day.trim().toLowerCase() === "i love you, maram" || day.trim().toLowerCase() === "i love you maram" || day.trim().toLowerCase() === "iloveyoumaram") {
+                    setIsLogged(true);
+                    if (audioRef.current) {
+                        const playPromise = audioRef.current.play();
+                        if (playPromise !== undefined) {
+                            playPromise
+                                .then(() => setIsPlaying(true))
+                                .catch(error => console.log("Audio playback failed:", error));
+                        }
+                    }
+                    setTimeout(() => setShowEnvelope(true), 1200);
+                } else {
+                    alert(lang === 'ar' ? "غلط يا روحي" : "Wrong, my love");
+                }
+            };
+
+            const toggleAudio = () => {
+                if (isPlaying) {
+                    audioRef.current.pause();
+                } else {
+                    audioRef.current.play();
+                }
+                setIsPlaying(!isPlaying);
+            };
+
+            usePulse(isPlaying);
+
+            useEffect(() => {
+                document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                document.documentElement.lang = lang;
+            }, [lang]);
+
+            const t = i18n[lang] || i18n['ar'];
+
+            return (
+                <div className={`login-gradient min-h-screen font-sans text-gray-100 overflow-x-hidden relative ${lang === 'ar' ? 'text-right' : 'text-left'}`}>
+                    <StarBackground />
+                    {/* Global Night Sky Background - Always Visible */}
+                    <div className="fixed inset-0 pointer-events-none">
+                        {[...Array(50)].map((_, i) => (
+                            <div key={i} className="absolute bg-white rounded-full animate-pulse"
+                                style={{
+                                    width: Math.random() * 2 + 'px',
+                                    height: Math.random() * 2 + 'px',
+                                    top: Math.random() * 100 + '%',
+                                    left: Math.random() * 100 + '%',
+                                    opacity: Math.random() * 0.5 + 0.1,
+                                    animationDuration: Math.random() * 5 + 3 + 's'
+                                }}></div>
+                        ))}
+                    </div>
+
+                    {/* Audio Player - Always Mounted */}
+                    <audio ref={audioRef} loop>
+                        <source src="./song.mp3" type="audio/mpeg" />
+                    </audio>
+
+                    {/* Audio Toggle Button - Always Visible */}
+                    <div className={`fixed top-4 z-50 flex gap-2 ${lang === 'ar' ? 'left-4' : 'right-4'}`}>
+                        <button onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')} className="p-3 rounded-full shadow-lg bg-white text-[rgb(196,13,116)] font-bold hover:bg-gray-100 transition-all uppercase text-xs">
+                            {lang === 'ar' ? 'EN' : 'AR'}
+                        </button>
+                        <button onClick={toggleAudio} className={`p-3 rounded-full shadow-lg transition-all duration-300 ${isPlaying ? 'bg-pink-500 text-white animate-spin' : 'bg-white text-pink-500 hover:bg-gray-100'}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 18V5l12-2v13"></path>
+                                <circle cx="6" cy="18" r="3"></circle>
+                                <circle cx="18" cy="16" r="3"></circle>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {!isLogged ? (
+                        <div className="min-h-screen flex items-center justify-center relative overflow-hidden font-sans z-20 login-gradient">
+                            {/* Animated Background Aura */}
+                            <div className="aura-glow top-0 left-0 pointer-events-none" style={{ animationDelay: '0s' }}></div>
+                            <div className="aura-glow bottom-0 right-0 pointer-events-none" style={{ animationDelay: '-10s', background: 'radial-gradient(circle, rgba(124, 58, 237, 0.1) 0%, transparent 70%)' }}></div>
+
+                            {/* Floating Hearts Decor */}
+                            <div className="absolute inset-0 pointer-events-none opacity-30">
+                                {[...Array(15)].map((_, i) => (
+                                    <div key={i} className="absolute animate-float"
+                                        style={{
+                                            top: Math.random() * 100 + '%',
+                                            left: Math.random() * 100 + '%',
+                                            fontSize: Math.random() * 20 + 10 + 'px',
+                                            animationDuration: Math.random() * 5 + 5 + 's',
+                                            animationDelay: -Math.random() * 5 + 's'
+                                        }}>💖</div>
+                                ))}
+                            </div>
+
+                            {/* Redesigned Login Card */}
+                            <div className="relative z-10 bg-white/10 backdrop-blur-lg p-8 md:p-12 rounded-3xl text-center max-w-sm w-full mx-4 animate-slide-up group shadow-[0_0_30px_rgba(196,13,116,0.2)] border border-white/10">
+                                <div className="mb-8 relative">
+                                    <div className="absolute -inset-4 bg-[#830b9d]/20 blur-2xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+                                    <div className="relative inline-block p-4 bg-white/5 rounded-full border border-white/10 mb-4">
+                                        <Heart className="w-12 h-12 text-[rgb(196,13,116)] animate-pulse" />
+                                    </div>
+                                    <h1 className="text-4xl font-bold text-white tracking-tight">{t.login.title}</h1>
+                                    <p className="text-white/40 text-sm mt-2 uppercase tracking-[0.2em] font-light">The Sacred Vault</p>
+                                </div>
+
+                                <div className="space-y-6">
+                                    <div className="flex gap-4">
+                                        <div className="relative group/input flex-1">
+                                            <input
+                                                type="password"
+                                                placeholder={t.login.day}
+                                                className="w-full bg-white/5 border border-white/10 p-4 md:p-5 rounded-2xl text-white text-center focus:outline-none focus:ring-2 focus:ring-[rgb(196,13,116)]/50 focus:border-[rgb(196,13,116)] transition-all placeholder:text-white/20 text-lg md:text-xl font-bold tracking-widest"
+                                                value={day}
+                                                onChange={(e) => setDay(e.target.value)}
+                                                onKeyDown={(e) => e.key === 'Enter' && handleLogin()}
+                                            />
+                                            <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-transparent via-white/5 to-transparent pointer-events-none opacity-0 group-hover/input:opacity-100 transition-opacity"></div>
+                                        </div>
+                                    </div>
+
+                                    <button
+                                        onClick={handleLogin}
+                                        className="shimmer-btn w-full bg-gradient-to-r from-[rgb(196,13,116)] to-[rgb(196,13,116)] text-white font-bold py-5 rounded-2xl shadow-2xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 text-lg flex items-center justify-center gap-3 group/btn"
+                                    >
+                                        <span>{t.login.btn}</span>
+                                        <Heart className="w-5 h-5 group-hover/btn:scale-125 transition-transform" />
+                                    </button>
+                                </div>
+
+                                <p className="mt-8 text-white/30 text-xs font-light italic">"{t.login.quote}"</p>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="relative z-10">
+                            {/* Sticky Navigation */}
+                            <nav className="fixed top-0 left-0 right-0 z-40 bg-black/60 backdrop-blur-xl border-b border-white/10 px-4 py-2 md:py-3 flex flex-col items-center gap-1 md:gap-2 transition-all">
+                                <div className="text-xl md:text-2xl font-bold font-script text-[rgb(196,13,116)]">طارق و مرام</div>
+                                <div className="flex gap-4 text-[9px] xs:text-[11px] sm:text-xs md:text-sm tracking-tight sm:gap-6 uppercase font-premium">
+                                    <a href="#timeline" className="hover:text-[rgb(196,13,116)] transition-colors whitespace-nowrap">{t.nav.memories}</a>
+                                    <a href="#video" className="hover:text-[rgb(196,13,116)] transition-colors">{t.nav.video}</a>
+                                    <a href="#reasons" className="hover:text-[rgb(196,13,116)] transition-colors">{t.nav.why}</a>
+                                </div>
+                            </nav>
+
+                            {/* Popups */}
+                            {showSecret && (
+                                <div className="fixed inset-0 flex items-center justify-center bg-black/60 z-50 animate-fade-in backdrop-blur-sm" onClick={() => setShowSecret(false)}>
+                                    <div className="bg-white px-16 py-12 rounded-[2rem] text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#830b9d] to-[#830b9d] shadow-2xl transform scale-105 transition-transform text-center mx-4">
+                                        I love you, Maram
+                                    </div>
+                                </div>
+                            )}
+
+                            {/* Image Lightbox */}
+                            {selectedImage && (
+                                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center animate-fade-in p-4" onClick={() => setSelectedImage(null)}>
+                                    <button className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-all">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                    </button>
+                                    <img src={selectedImage} alt="Full View" className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl border-2 border-white/20 animate-scale-up" onClick={(e) => e.stopPropagation()} />
+                                </div>
+                            )}
+
+                            {/* Popups & Interactive Flow */}
+
+                            {showEnvelope && <EnvelopeComponent onEnter={() => setShowEnvelope(false)} lang={lang} />}
+
+                            {showFinalScene && <FinalSceneComponent onClose={() => setShowFinalScene(false)} lang={lang} />}
+
+                            {/* Content */}
+                            <div className="relative">
+                                {/* Hero Section */}
+                                <section className="min-h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#830b9d]/20 to-transparent -z-10"></div>
+
+                                    <h1 className="text-6xl md:text-8xl font-serif font-black mb-6 leading-tight drop-shadow-[0_0_30px_rgba(255,255,255,0.3)] text-white">
+                                        طارق <span className="text-[rgb(196,13,116)] italic">&</span> مرام
+                                    </h1>
+                                    <p className="text-base xs:text-lg md:text-3xl text-gray-300 mb-8 md:mb-10 font-light px-6">{t.hero.subtitle}</p>
+
+                                    <button onClick={() => { setShowSecret(true); setTimeout(() => setShowSecret(false), 2000); }}
+                                        className="group relative overflow-hidden bg-white text-[rgb(196,13,116)] px-10 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 font-bold text-lg border border-pink-100">
+                                        <span className="relative z-10 transition-colors group-hover:text-white">{t.hero.btn}</span>
+                                        <div className="absolute inset-0 bg-gradient-to-r from-[rgb(196,13,116)] to-[rgb(196,13,116)] transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300"></div>
+                                    </button>
+
+                                    <div className="absolute bottom-10 animate-bounce text-[rgb(196,13,116)]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M7 13l5 5 5-5M7 6l5 5 5-5" /></svg>
+                                    </div>
+                                </section>
+                            </div>
+
+
+
+
+                            {/* Love Meter Section */}
+                            <section className="py-12 md:py-20 px-4 text-center relative z-10">
+                                <h2 className="text-3xl md:text-4xl font-bold mb-8 md:10 text-[rgb(196,13,116)]">{t.meter.title}</h2>
+                                <div className="max-w-2xl mx-auto bg-white/15 backdrop-blur-lg p-6 md:p-12 rounded-3xl shadow-[0_0_30px_rgba(196,13,116,0.2)] border border-white/10 cursor-pointer group transition-all hover:bg-white/20"
+                                    onClick={(e) => {
+                                        if (e.currentTarget.classList.contains('calculating')) return;
+                                        e.currentTarget.classList.add('calculating');
+
+                                        const progressBar = e.currentTarget.querySelector('.progress-bar');
+                                        const heart = e.currentTarget.querySelector('.meter-heart');
+                                        const text = e.currentTarget.querySelector('.status-text');
+
+                                        text.innerText = t.meter.calc;
+                                        progressBar.style.width = "0%";
+                                        progressBar.style.transition = "width 3s ease-in-out";
+
+                                        // Animate Progress
+                                        requestAnimationFrame(() => {
+                                            progressBar.style.width = "100%";
+                                        });
+
+                                        // Heart Beat Faster
+                                        heart.style.animationDuration = "0.5s";
+
+                                        setTimeout(() => {
+                                            text.innerHTML = t.meter.result;
+                                            text.classList.remove("text-pink-300", "to-pink-300", "text-white/50");
+                                            text.classList.add("text-3xl", "font-bold", "text-white", "animate-fade-in");
+
+                                            // Add Flash Effect
+                                            const flash = document.createElement('div');
+                                            flash.className = 'fixed inset-0 flash-effect z-[200] pointer-events-none';
+                                            document.body.appendChild(flash);
+                                            setTimeout(() => flash.remove(), 1000);
+                                            heart.style.transform = "scale(1.5)";
+                                            heart.style.animationDuration = "1s";
+
+                                            // Confetti Effect (Simple manual particles)
+                                            for (let k = 0; k < 20; k++) {
+                                                const p = document.createElement('div');
+                                                p.innerHTML = '🎉';
+                                                p.style.position = 'absolute';
+                                                p.style.left = '50%';
+                                                p.style.top = '50%';
+                                                p.style.fontSize = '20px';
+                                                p.style.transform = `translate(${(Math.random() - 0.5) * 200}px, ${(Math.random() - 0.5) * 200}px)`;
+                                                p.style.transition = 'all 1s ease-out';
+                                                p.style.opacity = '1';
+                                                e.currentTarget.appendChild(p);
+                                                setTimeout(() => { p.style.opacity = '0'; }, 500);
+                                                setTimeout(() => p.remove(), 1000);
+                                            }
+
+                                            e.currentTarget.classList.remove('calculating');
+                                        }, 3000);
+                                    }}>
+                                    <div className="relative pt-1">
+                                        <div className="flex mb-2 items-center justify-between">
+                                            <div>
+                                                <span className="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-pink-100 bg-[#830b9d]/30">
+                                                    {t.meter.label}
+                                                </span>
+                                            </div>
+                                            <div className="text-right flex items-center gap-1">
+                                                <InfinityIcon className="w-5 h-5 text-pink-100" />
+                                                <span className="text-sm font-bold text-pink-100">%</span>
+                                            </div>
+                                        </div>
+                                        <div className="overflow-hidden h-10 mb-4 text-xs flex rounded-full bg-white/20 shadow-inner border border-white/10">
+                                            <div style={{ width: "10%" }} className="progress-bar shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-gradient-to-r from-[rgb(196,13,116)] via-purple-500 to-[rgb(196,13,116)] transition-all duration-300"></div>
+                                        </div>
+                                        <div className="flex justify-center mt-4">
+                                            <Heart className="meter-heart w-32 h-32 text-[#830b9d] animate-pulse drop-shadow-[0_0_15px_rgba(185,7,114,0.5)] transition-transform duration-200" />
+                                        </div>
+                                        <p className="status-text mt-4 text-xl font-bold text-white">
+                                            {t.meter.hint}
+                                        </p>
+                                    </div>
+                                </div>
+                            </section>
+
+
+                            <ConstellationGame lang={lang} />
+
+                            {/* Timeline Section */}
+                            <section id="timeline" className="py-32 px-4 relative z-10">
+                                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-[rgb(196,13,116)] font-premium">{t.timeline.title}</h2>
+                                <div className="max-w-6xl mx-auto relative">
+                                    <div className="absolute left-4 md:left-1/2 bg-gradient-to-b from-[rgb(196,13,116)] to-[#D4AF37] w-1 h-full md:ml-0 shadow-[0_0_10px_rgba(196,13,116,0.5)]"></div>
+                                    {t.timeline.items.map((item, i) => (
+                                        <div key={i} className={`flex items-center justify-between mb-16 w-full relative ${i % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'} flex-row`}>
+                                            <div className="hidden md:block w-5/12"></div>
+                                            <div className="z-10 bg-gray-900 border-2 md:border-4 border-[rgb(196,13,116)] w-4 h-4 md:w-8 md:h-8 rounded-full shadow-[0_0_10px_rgba(196,13,116,0.8)] relative ml-[-6px] md:ml-0">
+                                                <div className="absolute top-1/2 left-1/2 w-full h-0.5 md:h-1 bg-[rgb(196,13,116)]/50 transform -translate-y-1/2 -translate-x-1/2 z-[-1] animate-pulse"></div>
+                                            </div>
+                                            <div className="w-11/12 md:w-5/12 pl-6 md:pl-0 text-right">
+                                                <div className="bg-white/10 backdrop-blur-md p-4 md:p-6 rounded-2xl shadow-xl border border-white/5 hover:bg-white/20 transition-all duration-300 group transform hover:scale-105">
+                                                    <div className="relative overflow-hidden rounded-xl w-full border border-pink-500/30 cursor-pointer group-hover:shadow-[0_0_20px_rgba(236,72,153,0.6)] transition-shadow duration-300 bg-black/20" onClick={() => setSelectedImage(`./photo${(i % 4) + 1}.jpg`)}>
+                                                        <img src={`./photo${(i % 4) + 1}.jpg`} alt="Memory" className="parallax-img w-full h-auto object-contain object-center transform transition-transform duration-500 group-hover:scale-105 will-change-transform" />
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none"></div>
+                                                        <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                                                            <span className="text-5xl md:text-6xl drop-shadow-[0_0_25px_rgba(255,77,177,0.9)] animate-pulse">💖</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
+                            <section id="video" className="py-24 px-4 text-center relative z-10">
+                                <div className="max-w-4xl mx-auto">
+
+                                    {/* Message 2: Video */}
+                                    <div className="bg-white/10 backdrop-blur-md p-8 rounded-[2rem] shadow-2xl border border-pink-500/30 transform hover:scale-[1.02] transition-all duration-500 relative group overflow-hidden max-w-4xl mx-auto">
+                                        <div className="absolute inset-0 bg-gradient-to-br from-pink-600/10 to-pink-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                                        <h3 className="text-2xl font-bold text-pink-200 mb-6 relative z-10">{t.video.title}</h3>
+                                        <div className="relative z-10 rounded-xl overflow-hidden shadow-lg">
+                                            <video className="w-full" controls id="newVideo"
+                                                onPlay={() => {
+                                                    if (audioRef.current) {
+                                                        audioRef.current.pause();
+                                                        setIsPlaying(false);
+                                                    }
+                                                    // Pause audio message if playing (though unlikely to overlap with native controls)
+                                                }}
+                                                onPause={() => {
+                                                    // Resume music only if audio message is paused (it should be)
+                                                    if (audioRef.current && isLogged) {
+                                                        audioRef.current.play();
+                                                        setIsPlaying(true);
+                                                    }
+                                                }}
+                                                onEnded={() => {
+                                                    if (audioRef.current && isLogged) {
+                                                        audioRef.current.play();
+                                                        setIsPlaying(true);
+                                                    }
+                                                }}
+                                            >
+                                                <source src="./video.mp4" type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                        <p className="mt-6 text-gray-300 italic relative z-10">"{t.video.sub}"</p>
+                                    </div>
+
+                                </div>
+                            </section>
+
+                            {/* Reasons Why Section */}
+                            <section id="reasons" className="py-16 md:py-24 px-4 relative z-10">
+                                <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 md:16 text-[rgb(196,13,116)] font-premium">{t.reasons.title}</h2>
+                                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+                                    {[
+                                        t.reasons.r1, t.reasons.r2, t.reasons.r3,
+                                        t.reasons.r4, t.reasons.r5, t.reasons.r6
+                                    ].map((card, i) => (
+                                        <div key={i} className="bg-white/5 p-6 md:p-8 rounded-3xl shadow-xl border border-white/5 hover:-translate-y-2 hover:bg-white/10 transition-all duration-300 group backdrop-blur-sm">
+                                            <div className="w-12 h-12 bg-pink-900/50 rounded-full flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-colors border border-pink-500/30">
+                                                <Heart className="w-6 h-6 text-pink-400 group-hover:text-white transition-colors" />
+                                            </div>
+                                            <h3 className="text-2xl font-bold text-pink-100 mb-3">{card.t}</h3>
+                                            <p className="text-gray-400 leading-relaxed">{card.d}</p>
+                                        </div>
+                                    ))}
+                                </div>
+                            </section>
+
+
+
+                            {/* Counting Section */}
+                            <section className="py-24 px-4 relative z-10">
+                                <div className="max-w-6xl mx-auto premium-counter rounded-[2rem] md:rounded-[3rem] p-8 md:p-16 text-center border border-white/10 relative overflow-hidden">
+                                    <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_-20%,rgba(196,13,116,0.1),transparent_70%)]"></div>
+                                    <RelationshipClock startDate={firstSightDate} lang={lang} />
+                                </div>
+                            </section>
+
+                            <footer className="py-16 text-center bg-white/5 backdrop-blur-md border-t border-white/10">
+                                <p className="text-2xl font-script text-[rgb(196,13,116)] mb-8">إنتي كل حياتي يا مرام 💖</p>
+                                <button onClick={() => setShowFinalScene(true)}
+                                    className="bg-[rgb(196,13,116)] text-white px-8 py-3 rounded-full text-sm hover:bg-black transition-all shadow-lg tracking-widest uppercase font-bold">
+                                    {t.footer.final}
+                                </button>
+                            </footer>
+
+                            <LoveNote lang={lang} />
+                        </div>
+                    )
+                    }
+                    {isLogged && <DecorativeFrame />}
+                </div >
+            );
+        }
+
+        function TimeBox({ label, value }) {
+            return (
+                <div className="bg-white p-6 rounded-2xl shadow-lg border border-pink-100 flex flex-col items-center justify-center aspect-square transform hover:scale-105 transition-transform duration-300">
+                    <span className="text-4xl font-bold text-[#830b9d] mb-2">{value || 0}</span>
+                    <span className="text-gray-400 text-sm font-medium">{label}</span>
+                </div>
+            );
+        }
+
+        function FinalSceneComponent({ onClose, lang }) {
+            const [step, setStep] = useState(0);
+            const t = i18n[lang].finalScene;
+
+            useEffect(() => {
+                const timeouts = [];
+                const schedule = (ms, s) => timeouts.push(setTimeout(() => setStep(s), ms));
+
+                // Timeline matches the user's poetic flow
+                schedule(1000, 1);  // Title
+                schedule(4000, 2);  // Meaning 1
+                schedule(7000, 3);  // Meaning 2
+                schedule(10000, 4); // Meaning 3
+                schedule(13000, 5); // Stability
+                schedule(16000, 6); // Hard times
+                schedule(19000, 7); // Heart choice
+                schedule(22000, 8); // Always choice
+
+                // Grand Finale
+                schedule(26000, 10); // Clear layout
+                schedule(27000, 11); // Names
+                schedule(30000, 12); // Infinity
+                schedule(33000, 13); // English quote
+                schedule(38000, 14); // Whisper
+
+                return () => timeouts.forEach(clearTimeout);
+            }, []);
+
+            return (
+                <div className="fixed inset-0 z-[100] bg-black text-white flex flex-col items-center justify-center text-center p-6 overflow-hidden transition-colors duration-[2s]">
+                    {/* Side Controls */}
+                    <button onClick={onClose} className="fixed top-6 right-6 z-[110] bg-white/10 backdrop-blur-md border border-white/20 text-white p-3 rounded-full hover:bg-white/30 transition-all group" title="خروج">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+
+                    {/* Background Stars */}
+                    <div className="absolute inset-0 pointer-events-none opacity-40">
+                        {[...Array(30)].map((_, i) => (
+                            <div key={i} className="absolute bg-white rounded-full animate-pulse"
+                                style={{
+                                    width: Math.random() * 3 + 'px',
+                                    height: Math.random() * 3 + 'px',
+                                    top: Math.random() * 100 + '%',
+                                    left: Math.random() * 100 + '%',
+                                    animationDuration: Math.random() * 3 + 2 + 's'
+                                }}></div>
+                        ))}
+                    </div>
+
+                    <div className="relative z-10 max-w-4xl w-full flex flex-col items-center justify-center min-h-[60vh]">
+                        {step === 1 && (
+                            <h1 className="text-3xl xs:text-5xl md:text-7xl font-extrabold text-white drop-shadow-[0_0_15px_rgba(131,11,157,0.8)] animate-slide-up leading-tight px-4" dangerouslySetInnerHTML={{ __html: t.scene1 }}></h1>
+                        )}
+
+                        {step >= 2 && step < 10 && (
+                            <div className="mt-12 space-y-8">
+                                {step >= 2 && <p className="text-2xl text-gray-300 animate-fade-in">{t.scene2} <span className="text-pink-400 font-bold block mt-2 text-3xl">{t.scene2b}</span></p>}
+                                {step >= 3 && <p className="text-2xl text-gray-300 animate-fade-in mt-8">{t.scene3} <span className="text-rose-400 font-bold block mt-2 text-3xl">{t.scene3b}</span></p>}
+                                {step >= 5 && <div className="h-px w-24 bg-gray-800 mx-auto my-8 animate-fade-in"></div>}
+                                {step >= 6 && <p className="text-xl text-gray-500 italic animate-fade-in">"{t.scene6}"</p>}
+                                {step >= 7 && <p className="text-4xl font-bold text-white mt-6 animate-slide-up">{t.scene7}</p>}
+                                {step >= 8 && <p className="text-2xl text-pink-300 mt-4 animate-fade-in">{t.scene8}</p>}
+                            </div>
+                        )}
+
+                        {step >= 11 && (
+                            <div className="absolute inset-0 flex flex-col items-center justify-center bg-black animate-fade-in">
+                                <h1 className="text-4xl xs:text-6xl md:text-9xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-pink-600 animate-pulse-slow mb-8 px-4">
+                                    مرام
+                                </h1>
+
+                                {step >= 12 && (
+                                    <div className="flex items-center gap-4 text-3xl text-gray-400 animate-fade-in font-light tracking-wide">
+                                        <span>{t.infinity}</span>
+                                        <span className="text-5xl text-[rgb(196,13,116)] animate-spin-slow">∞</span>
+                                    </div>
+                                )}
+
+                                {step >= 13 && (
+                                    <p className="mt-12 text-2xl font-script text-white/60 animate-slide-up">مرام و بس 💖</p>
+                                )}
+                            </div>
+                        )}
+
+                        {step >= 14 && (
+                            <div className="fixed bottom-6 right-6 z-[110] animate-fade-in flex flex-col items-end gap-2">
+                                <p className="text-xs text-gray-500 mb-2 mr-2">{t.thanks}</p>
+                                <button onClick={onClose} className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full hover:bg-white hover:text-black transition-all flex items-center gap-2 group">
+                                    <span>{t.back}</span>
+                                    <span className="group-hover:-translate-x-1 transition-transform">🏠</span>
+                                </button>
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        }
+
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+        root.render(<LoveWebsite />);
+    </script>
+</body>
+
+</html>

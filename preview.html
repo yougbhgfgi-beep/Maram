@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToTo & Etsh - Preview</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="importmap">
+        {
+            "imports": {
+                "react": "https://esm.sh/react@18.2.0",
+                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+                "framer-motion": "https://esm.sh/framer-motion@10.16.4",
+                "lucide-react": "https://esm.sh/lucide-react@0.292.0"
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Premium Breathing Gradient with Crystal Shimmer */
+        .premium-bg {
+            background: linear-gradient(180deg, #830b9d, #830b9d, #830b9d);
+            background-size: 100% 200%;
+            animation: breathingGradient 15s ease infinite;
+            position: relative;
+        }
+
+        .premium-bg::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+            opacity: 0.5;
+            animation: crystalShimmer 8s ease-in-out infinite;
+        }
+
+        @keyframes crystalShimmer {
+
+            0%,
+            100% {
+                transform: scale(1) translate(0, 0);
+                opacity: 0.3;
+            }
+
+            50% {
+                transform: scale(1.2) translate(5%, 5%);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes breathingGradient {
+
+            0%,
+            100% {
+                background-position: 0% 0%;
+            }
+
+            50% {
+                background-position: 0% 100%;
+            }
+        }
+
+        .glass-panel {
+            background: rgba(131, 11, 157, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root"></div>
+
+    <script type="module">
+        import React, { useState, useEffect } from "react";
+        import { createRoot } from "react-dom/client";
+        import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+        import { Lock, Heart, Stars, Music } from "lucide-react";
+
+        const translations = {
+            ar: {
+                dir: 'rtl',
+                portal: 'بوابة حبنا 💖',
+                birthday: 'يوم ميلاده',
+                login: 'دخول',
+                loginError: 'غلط ي روحي',
+                navMemories: 'ذكرياتنا',
+                navGallery: 'صورنا',
+                navTime: 'مدة حبنا',
+                loveMessage: 'بحبك يا Etsh 💖',
+                heroSubtitle: 'قصة حب مكتوبة للابد',
+                names: 'ToTo & Etsh',
+                surprise: 'زر المفاجأة',
+                years: 'سنين',
+                months: 'شهور',
+                days: 'أيام',
+                hours: 'ساعات',
+                minutes: 'دقائق',
+                seconds: 'ثواني',
+                finalText: 'النهاية',
+                memories: [
+                    { text: "أجمل صدفة في حياتي 💖", desc: "طول ما ايدينا ماسكة بعض، مبخافش من أي حاجة في الدنيا. أنت قوتي وسندي اللي بتسند عليه لما الدنيا تميل. لمسة ايدك دي بتديني طاقة تهد جبال وتبنيها عشانك يا حبيبي." },
+                    { text: "لمسة دفا وحنية 🌍", desc: "بلاقي في لمستك كل معاني الحنية والاحتواء، كأن العالم كله بيختفي ومش بيتبقى غيرنا. ايدك هي بيتي ومطرحي، وهي الدفا اللي بحس بيه في عز البرد." },
+                    { text: "مشوار عمرنا سوا 💑", desc: "كل خطوة بنمشيها سوا بتبقى أجمل، وايدي في ايدك بتنور طريقي. أنت مش بس حبيبي، أنت رفيق الدرب اللي محليه، ومعاك المشوار مهما كان صعب بيبقى رحلة حب في الجنة." },
+                    { text: "وعد وقسم 💍", desc: "وعد مني إننا عمرنا ما نسيب ايد بعض أبداً، مهما حصل هفضل ماسكة فيك ومتمسكة بيك لآخر نفس في عمري. ايدنا في ايد بعض ده ميثاق غليظ ومبيتكسرش." },
+                    { text: "اكتفائي بيك ✨", desc: "مش عايزة من الدنيا غير إني أفضل جنبك وماسكة ايدك، ده بالنسبالي بالدنيا وما فيها. كفاية عليا نظرة لعيونك وأنا ماسكة ايدك، بحس إني ملكت الكون كله." }
+                ],
+                finalScene: [
+                    "ولو كان في عمر تاني… هختارك برضه",
+                    "مش مجرد شخص دخل حياتي…",
+                    "أنت الحياة نفسها.",
+                    "مش مجرد حب…",
+                    "أنت الأمان، والونس، والبيت.",
+                    "لو الأيام اتشقلبت... ولو الدنيا وقفت ضدنا",
+                    "أنا ثابتة…",
+                    "علشان اخترتك بقلب كامل.",
+                    "إلى ما لا نهاية",
+                    "شكراً إنك جيت حياتي… وغيرتها للأبد."
+                ]
+            }
+        };
+
+        const finalLetter = `حبيبي\nعايزة اقولك كام كلمة كدة ..... انا بحبك اوووي بجد وبحب وجودك معايا في كل حاجة وكل لحظة بجد عايزة اقولك انك وحشتني اوووي ووحشني وقتنا في الجامعه ووحشني خناقنا سوا جدا بجد .... كل سنه وانت معايا كل سنة وانت ضهر وسند ليا قبل متكون حبيبي كل سنة واحنا ديما ماسكين في بعض بجد انا مش قادرة اقولك انا قد اي مبسوطة باللحظة الي اتجمعت فيها معاك واليوم والساعة والثانية الي عرفنا بعض فيها بجد شكرا علي كل لحظة انت استحملتني فيها واستحملت نكدي وزعلي وكنت بتمسك فيا ديما بجد انا بحبك اوووي وبجد ده كلمه عمرها مهتوصف انا اد اي بحبك بصراحة بس انت ليك مكان كبير في قلبي بجد وربنا يخليك ليا وتفضل ليا اخ وصاحب وحبيب واب وكل حاجة في الدنيا وافضل مطلعة عينك ديما كده وانت ديما علي قلبك زي العسل بس بجد انا بحبك اوي وبحبك اشركك كل تفاصيلي وانت بجد بتقعد تسمع الرغي بتاعي ديما وعمرك مزهقت مني وديما بتسبني اعك وانت بتلم ورايا وديما بتدلعني علي حسك بجد وشكرا علي كل الوقت الي قضيناه سوا والي لسه هنقضيه اكيد ونسافر سوا بقي ونفتح مشروعنا سوا زي مكنا متفقين مع بعض شكرا لانك كنت ليا سند في كل وقت ..... بحبك اد البحر وسمكاتوو يا اغلي واحلي اتش في الدنيا وعقبال المليون سنة واحنا سوا وكتف في كتف يحبيبي🌍\n\nبحبك بعدد الثواني (63,158,400) الي قضيناها سوا بجد👀`;
+
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        purple: {
+                            500: '#830b9d',
+                            600: '#830b9d',
+                        },
+                        magenta: {
+                            500: '#830b9d',
+                            600: '#830b9d',
+                        }
+                    }
+                }
+            }
+        };
+
+        function LoveWebsite() {
+            const [lang, setLang] = useState('ar');
+            const t = translations[lang];
+
+            useEffect(() => {
+                document.documentElement.dir = t.dir;
+                document.documentElement.lang = lang;
+            }, [lang]);
+
+            const [isLogged, setIsLogged] = useState(false);
+            const [day, setDay] = useState("");
+            const [showLetter, setShowLetter] = useState(false);
+            const [letterOpen, setLetterOpen] = useState(false);
+            const [showSecret, setShowSecret] = useState(false);
+            const [showFinalScene, setShowFinalScene] = useState(false);
+            const [timeTogether, setTimeTogether] = useState({});
+            const [isPlaying, setIsPlaying] = useState(false);
+            const audioRef = React.useRef(null);
+
+            const loveStartDate = new Date("2024-02-27T00:00:00");
+            const { scrollYProgress } = useScroll();
+            const scaleHero = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
+
+            useEffect(() => {
+                const interval = setInterval(() => {
+                    const now = new Date();
+                    const diff = now - loveStartDate;
+
+                    const totalSeconds = Math.floor(diff / 1000);
+                    const years = Math.floor(totalSeconds / (3600 * 24 * 365));
+                    const months = Math.floor((totalSeconds % (3600 * 24 * 365)) / (3600 * 24 * 30));
+                    const days = Math.floor((totalSeconds % (3600 * 24 * 30)) / (3600 * 24));
+                    const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
+                    const minutes = Math.floor((totalSeconds % 3600) / 60);
+                    const seconds = totalSeconds % 60;
+
+                    setTimeTogether({ years, months, days, hours, minutes, seconds });
+                }, 1000);
+                return () => clearInterval(interval);
+            }, []);
+
+            const handleLogin = () => {
+                if (day === "27") {
+                    setIsLogged(true);
+                    if (audioRef.current) {
+                        audioRef.current.play().catch(e => console.log("Audio play failed:", e));
+                        setIsPlaying(true);
+                    }
+                    setTimeout(() => setShowLetter(true), 1200);
+                } else {
+                    alert(t.loginError);
+                }
+            };
+
+            const triggerSecret = () => {
+                setShowSecret(true);
+                setTimeout(() => setShowSecret(false), 2000);
+            };
+
+            if (!isLogged) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center bg-[#830b9d]/20 login-gradient">
+                        <div className="bg-black/40 backdrop-blur-xl p-10 rounded-3xl text-center text-white border border-white/10 shadow-2xl">
+                            <Lock className="mx-auto mb-4 text-pink-200" size={40} />
+                            <h1 className="text-3xl font-bold mb-6">{t.portal}</h1>
+                            <div className="flex justify-center gap-4 mb-8">
+                                <input type="password" placeholder="اليوم المحظوظ" value={day} onChange={(e) => setDay(e.target.value)} className="w-48 p-3 rounded-xl text-white text-center bg-[#830b9d] border border-white/20 focus:outline-none focus:border-pink-400 placeholder-white/50 shadow-inner" />
+                            </div>
+                            <button onClick={handleLogin} className="bg-[#830b9d] px-8 py-3 rounded-2xl font-bold hover:bg-[#830b9d] transition-all border border-pink-400/50 shadow-lg w-full">دخول عالمنا ❤️</button>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="login-gradient text-white min-h-screen overflow-hidden relative">
+                    {/* Floating Sparkles */}
+                    <div className="fixed inset-0 pointer-events-none z-0">
+                        {[...Array(20)].map((_, i) =>
+                            <div key={i} className="absolute text-white/20 animate-float translate-y-[-20px]" style={{ fontSize: Math.random() * 10 + 5 + 'px', top: Math.random() * 100 + '%', left: Math.random() * 100 + '%', animationDelay: Math.random() * 5 + 's', animationDuration: Math.random() * 8 + 4 + 's' }}>✨</div>
+                        )}
+                    </div>
+                    <audio ref={audioRef} src="./background_music.mp4" loop />
+
+                    <div className="fixed top-4 left-4 z-50">
+                        <button onClick={() => { if (isPlaying) audioRef.current.pause(); else audioRef.current.play(); setIsPlaying(!isPlaying); }} className={`p-3 rounded-full shadow-lg text-[#830b9d] bg-white/80 hover:bg-white transition-all duration-300 ${isPlaying ? "animate-spin" : ""}`}>
+                            <Music size={24} />
+                        </button>
+                    </div>
+
+                    {/* Letter Overlay */}
+                    <AnimatePresence>
+                        {showLetter && (
+                            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-md flex items-center justify-center p-6">
+                                <div className="bg-white text-gray-800 p-8 md:p-12 rounded-[2rem] max-w-2xl w-full relative shadow-2xl overflow-y-auto max-h-[80vh] border-4 border-pink-200">
+                                    <button onClick={() => setShowLetter(false)} className="absolute top-4 right-4 text-gray-400 hover:text-gray-600">✕</button>
+                                    <div className="text-center mb-6">
+                                        <Heart className="mx-auto text-[#830b9d] mb-4" size={48} />
+                                        <h2 className="text-3xl font-bold">حبيبي ❤️</h2>
+                                    </div>
+                                    <p className="whitespace-pre-wrap text-lg md:text-xl leading-relaxed text-right" style={{ direction: 'rtl' }}>{finalLetter}</p>
+                                    <button onClick={() => setShowLetter(false)} className="mt-8 bg-gradient-to-r from-[#830b9d] to-[#830b9d] text-white px-10 py-3 rounded-full font-bold w-full">دخول الموقع ❤️</button>
+                                </div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Secret Popup */}
+                    <AnimatePresence>
+                        {showSecret && (
+                            <motion.div initial={{ opacity: 0, scale: 0.5 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+                                <div className="bg-white px-16 py-10 rounded-3xl text-4xl font-bold text-[#830b9d] shadow-2xl">بحبك ❤</div>
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+
+                    {/* Final Scene */}
+                    <AnimatePresence>
+                        {showFinalScene && <FinalSceneComponent onClose={() => setShowFinalScene(false)} />}
+                    </AnimatePresence>
+
+                    {/* Hero */}
+                    <motion.section style={{ scale: scaleHero }} className="text-center py-32 relative z-10">
+                        <h1 className="text-6xl md:text-8xl font-bold mb-6 font-serif tracking-tighter drop-shadow-lg">{t.names}</h1>
+                        <p className="text-2xl font-light italic opacity-80">{t.heroSubtitle}</p>
+                        <button onClick={triggerSecret} className="mt-12 bg-white text-[#830b9d] px-12 py-4 rounded-full shadow-2xl font-bold hover:scale-110 transition-transform">زر المفاجأة ✨</button>
+                    </motion.section>
+
+                    {/* Memories */}
+                    <section className="py-24 relative z-10">
+                        <h2 className="text-5xl font-bold text-center mb-20 drop-shadow-md">{t.navMemories}</h2>
+                        <div className="max-w-4xl mx-auto space-y-12 px-6">
+                            {t.memories.map((m, i) => (
+                                <motion.div key={i} initial={{ opacity: 0, y: 100 }} whileInView={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }} className={`flex ${i % 2 === 0 ? 'justify-start' : 'justify-end'} w-full`}>
+                                    <div className="bg-black/30 backdrop-blur-xl p-8 rounded-3xl border border-white/10 w-full md:w-[450px] group hover:bg-black/40 transition-all">
+                                        <div className="aspect-[4/5] w-full rounded-2xl overflow-hidden mb-6 border border-white/20">
+                                            <img src={`./mem${i + 1}.jpg`} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" alt="Memory" />
+                                        </div>
+                                        <h3 className="text-2xl font-bold text-[#830b9d] mb-2">{m.text}</h3>
+                                        <p className="text-gray-300 leading-relaxed text-right">{m.desc}</p>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
+                    </section>
+
+                    {/* Counter */}
+                    <section className="py-24 text-center relative z-10">
+                        <h2 className="text-3xl font-bold mb-12 opacity-80">{t.navTime}</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-6 gap-6 max-w-5xl mx-auto px-6">
+                            <TimeBox label={t.years} value={timeTogether.years} />
+                            <TimeBox label={t.months} value={timeTogether.months} />
+                            <TimeBox label={t.days} value={timeTogether.days} />
+                            <TimeBox label={t.hours} value={timeTogether.hours} />
+                            <TimeBox label={t.minutes} value={timeTogether.minutes} />
+                            <TimeBox label={t.seconds} value={timeTogether.seconds} />
+                        </div>
+                    </section>
+
+                    <footer className="py-20 text-center relative z-10 border-t border-white/10">
+                        <p className="text-2xl font-serif mb-8">For the rest of our life ❤️</p>
+                        <button onClick={() => setShowFinalScene(true)} className="bg-white text-[#830b9d] px-8 py-3 rounded-full font-bold shadow-xl hover:bg-pink-50 transition-colors">The Final Scene</button>
+                    </footer>
+                </div>
+            );
+        }
+
+        function TimeBox({ label, value }) {
+            return (
+                <div className="bg-[#830b9d] backdrop-blur-md p-6 rounded-2xl border border-white/10 shadow-xl">
+                    <div className="text-4xl font-bold text-[#830b9d] mb-1">{value || 0}</div>
+                    <div className="text-xs uppercase tracking-widest opacity-60">{label}</div>
+                </div>
+            );
+        }
+
+        function FinalSceneComponent({ onClose }) {
+            const [step, setStep] = useState(0);
+            useEffect(() => {
+                const schedule = (ms, s) => setTimeout(() => setStep(s), ms);
+                schedule(500, 1); schedule(3500, 2); schedule(6500, 3); schedule(9500, 4);
+                schedule(12500, 5); schedule(15500, 6); schedule(18500, 7); schedule(21500, 8);
+                schedule(25000, 10);
+            }, []);
+
+            const text = translations.ar.finalScene;
+            return (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] bg-black flex items-center justify-center text-center p-8">
+                    <button onClick={onClose} className="absolute top-6 right-6 text-white/30 hover:text-white">✕</button>
+                    <div className="max-w-3xl w-full">
+                        <AnimatePresence mode="wait">
+                            {step === 1 && <motion.h2 key="1" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -30 }} className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-400 to-#830b9d">{text[0]}</motion.h2>}
+                            {(step >= 2 && step <= 8) && (
+                                <motion.div key="seq" className="space-y-8">
+                                    {step >= 2 && <p className="text-xl md:text-2xl opacity-70">{text[1]}</p>}
+                                    {step >= 3 && <p className="text-3xl md:text-5xl font-bold text-pink-400">{text[2]}</p>}
+                                    {step >= 4 && <p className="text-xl md:text-2xl mt-8 opacity-70">{text[3]}</p>}
+                                    {step >= 5 && <p className="text-3xl md:text-5xl font-bold text-#830b9d">{text[4]}</p>}
+                                    {step >= 6 && <p className="text-xl italic text-gray-400 mt-10">"{text[5]}"</p>}
+                                    {step >= 7 && <p className="text-4xl md:text-6xl font-bold text-white mt-12">{text[6]}</p>}
+                                    {step >= 8 && <p className="text-2xl text-[#830b9d]">{text[7]}</p>}
+                                </motion.div>
+                            )}
+                            {step >= 10 && (
+                                <motion.div key="10" initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="flex flex-col items-center">
+                                    <h1 className="text-7xl md:text-9xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-[#830b9d] mb-8">ToTo & Etsh</h1>
+                                    <div className="flex items-center gap-4 text-3xl opacity-80">
+                                        <span>{text[8]}</span>
+                                        <span className="text-5xl text-pink-500 animate-spin-slow">∞</span>
+                                    </div>
+                                    <p className="mt-12 text-gray-500 italic">Thank you for being my everything.</p>
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
+                    </div>
+                </motion.div>
+            );
+        }
+
+        const root = createRoot(document.getElementById("root"));
+        root.render(<LoveWebsite />);
+    </script>
+</body>
+
+</html>
